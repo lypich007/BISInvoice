@@ -27,4 +27,5 @@ RUN dotnet publish "./BISInvoice.API.csproj" -c $BUILD_CONFIGURATION -o /app/pub
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+EXPOSE 8080
 ENTRYPOINT ["dotnet", "BISInvoice.API.dll"]
