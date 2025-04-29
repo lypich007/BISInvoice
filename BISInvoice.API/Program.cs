@@ -98,7 +98,7 @@ app.MapGet("/invoice/{id:guid}", async (AppDbContext dbContext, Guid id) =>
     .FirstOrDefaultAsync(i => i.Id == id);
     return invoice is not null ? Results.Ok(invoice) : Results.NotFound();
 }).WithOpenApi();
-app.MapPost("/invoice", async (AppDbContext dbContext, Invoice inv) =>
+app.MapPost("/invoice", async (AppDbContext dbContext, Invoice invoice) =>
 {
     //var invoice = new Invoice
     //{
@@ -107,9 +107,9 @@ app.MapPost("/invoice", async (AppDbContext dbContext, Invoice inv) =>
     //    DueDate = DateTime.UtcNow.AddDays(30),
     //    TotalAmount = 0
     //};
-    dbContext.Invoices.Add(inv);
+    dbContext.Invoices.Add(invoice);
     await dbContext.SaveChangesAsync();
-    return Results.Created($"/invoice/{inv.Id}", inv);
+    return Results.Created($"/invoice/{invoice.Id}", invoice);
 })
 .WithName("Invoice")
 .WithOpenApi();
